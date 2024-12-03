@@ -10,7 +10,7 @@ class Vehicles extends ScalatraServlet with RequestLogging {
 
   get("/") {
     contentType = "text/html"
-    val vehicles = VehicleDatabase.listAv   ailableVehicles()
+    val vehicles = VehicleDatabase.listAvailableVehicles()
     val response = {
       "<html>" +
         "<head><style>" +
