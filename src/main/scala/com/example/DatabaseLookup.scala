@@ -1,7 +1,5 @@
 package com.example
 
-import org.postgresql.util.{PSQLException, PSQLState}
-
 import java.sql.{Connection, DriverManager}
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Using
