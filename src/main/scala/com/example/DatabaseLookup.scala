@@ -8,10 +8,10 @@ import scala.util.Using
 
 object VehicleDatabase {
   def openConnection(): Connection = {
-    val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres?sslmode=disable&search_path=vehicles"
+    val jdbcUrl =
+      "jdbc:postgresql://localhost:5432/postgres?sslmode=disable&search_path=vehicles"
     val username = "postgres"
     val password = "example"
-
 
     // Register the PostgreSQL driver
     Class.forName("org.postgresql.Driver")
@@ -23,8 +23,9 @@ object VehicleDatabase {
   def listAvailableVehicles()(implicit connection: Connection): Seq[Vehicle] = {
     Using.Manager { use =>
       val st = use(connection.createStatement())
-      val result = use(st.executeQuery(
-        """
+      val result = use(
+        st.executeQuery(
+          """
                       |SELECT
                       |  id, year, make, model, trim, miles, url,
                       |  (
@@ -41,7 +42,8 @@ object VehicleDatabase {
                       |WHERE available
                       |ORDER BY year, make, model, trim;
           |""".stripMargin
-      ))
+        )
+      )
       val buffer = new ArrayBuffer[Vehicle]()
       while (result.next()) {
         val id = result.getLong(1)
@@ -55,7 +57,21 @@ object VehicleDatabase {
         val dealer = result.getString(9)
         val vin = result.getString(10)
         val interested = result.getBoolean(11)
-        buffer.addOne(Vehicle(id, year, make, model, trim, miles, price, url, dealer, vin, interested))
+        buffer.addOne(
+          Vehicle(
+            id,
+            year,
+            make,
+            model,
+            trim,
+            miles,
+            price,
+            url,
+            dealer,
+            vin,
+            interested
+          )
+        )
       }
       buffer.toSeq
     }.get
@@ -64,8 +80,7 @@ object VehicleDatabase {
   def setUnavailable(id: Int)(implicit connection: Connection): Unit = {
     Using.Manager { use =>
       val st = use(connection.createStatement())
-      st.execute(
-        s"""
+      st.execute(s"""
           |UPDATE vehicles.all
           |SET available = false
           |WHERE id = $id
@@ -73,11 +88,12 @@ object VehicleDatabase {
     }.get
   }
 
-  def setInterested(id: Int, interested: Boolean)(implicit connection: Connection): Unit = {
+  def setInterested(id: Int, interested: Boolean)(implicit
+      connection: Connection
+  ): Unit = {
     Using.Manager { use =>
       val st = use(connection.createStatement())
-      st.execute(
-        s"""
+      st.execute(s"""
            |UPDATE vehicles.all
            |SET interested = $interested
            |WHERE id = $id

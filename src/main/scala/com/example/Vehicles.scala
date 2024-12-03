@@ -14,9 +14,9 @@ class Vehicles extends ScalatraServlet with RequestLogging {
     val response = {
       "<html>" +
         "<head><style>" +
-        "td {"+
+        "td {" +
         "  padding: 10px;" +
-        "}"+
+        "}" +
         "table {" +
         "  border: 1px solid black;" +
         "}" +
