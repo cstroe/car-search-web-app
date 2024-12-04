@@ -1,6 +1,20 @@
 @import com.example.Vehicle
-@(vehicle: Vehicle)
-<html>
+@import com.example.Price
+@(vehicle: Vehicle, prices: Seq[Price])
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>@vehicle.year @vehicle.make @vehicle.trim</title>
+        <style>
+            td {
+                padding: 10px;
+            }
+
+            table {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
     <body>
         <h1>Vehicle Details</h1>
 
@@ -39,6 +53,20 @@
                 <td><a href="@vehicle.url" target="_blank">LINK</a></td>
                 <td><a href="/set_as_unavailable/@vehicle.id">SET UNAVAILABLE</a></td>
             </tr>
+        </table>
+
+        <h1>Prices</h1>
+        <table>
+            <tr>
+                <th>date</th>
+                <th>price</th>
+            </tr>
+            @for(price <- prices) {
+              <tr>
+                <td>@price.date</td>
+                <td>$ @{"%,d".format(price.amount)}</td>
+              </tr>
+            }
         </table>
 
     </body>

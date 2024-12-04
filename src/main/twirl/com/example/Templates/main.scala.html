@@ -1,6 +1,7 @@
 @import com.example.Vehicle
 @(vehicles: Seq[Vehicle])
-<html lang="en_US">
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <style>
             td {
@@ -47,8 +48,8 @@
                   <td>@vehicle.make</td>
                   <td>@vehicle.model</td>
                   <td>@vehicle.trim</td>
-                  <td>@vehicle.miles</td>
-                  <td>@vehicle.price</td>
+                  <td>@{"%,d".format(vehicle.miles)}</td>
+                  <td>$ @{"%,d".format(vehicle.price)}</td>
                   <td>@vehicle.vin</td>
                   <td><a href="@vehicle.url" target="_blank">LINK</a></td>
                   <td><a href="/set_as_unavailable/@vehicle.id">SET UNAVAILABLE</a></td>

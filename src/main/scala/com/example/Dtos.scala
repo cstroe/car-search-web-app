@@ -1,5 +1,7 @@
 package com.example
 
+import java.time.LocalDate
+
 case class Vehicle(
     id: Long,
     year: Int,
@@ -13,3 +15,5 @@ case class Vehicle(
     vin: String,
     interested: Boolean
 )
+
+case class Price(date: LocalDate, amount: Int)

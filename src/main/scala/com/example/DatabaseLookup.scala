@@ -130,4 +130,23 @@ object VehicleDatabase {
            |""".stripMargin)
     }.get
   }
+
+  def getPrices(vehicleId: Int)(implicit connection: Connection): Seq[Price] = {
+    Using.Manager { use =>
+      val st = use(connection.createStatement())
+      val result = st.executeQuery(s"""
+           |SELECT date, price
+           |FROM vehicles.price
+           |WHERE vehicle = $vehicleId
+           |ORDER BY date DESC
+           |""".stripMargin)
+      val buffer = new ArrayBuffer[Price]()
+      while (result.next()) {
+        val date = result.getDate(1).toLocalDate
+        val price = result.getInt(2)
+        buffer.addOne(Price(date, price))
+      }
+      buffer.toSeq
+    }.get
+  }
 }

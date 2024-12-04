@@ -24,7 +24,7 @@ class Vehicles extends ScalatraServlet with RequestLogging {
     contentType = "text/html"
     VehicleDatabase.getVehicle(id) match {
       case Some(vehicle) =>
-        Ok(vehicleTemplate(vehicle))
+        Ok(vehicleTemplate(vehicle, VehicleDatabase.getPrices(id)))
       case None =>
         Ok(notFoundTemplate())
     }
