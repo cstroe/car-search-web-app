@@ -6,8 +6,8 @@ import org.scalatra.servlet.ScalatraListener
 
 object ScalatraMain {
   def main(args: Array[String]): Unit = {
-    val port    = 8082
-    val server  = new Server(port)
+    val port = 8082
+    val server = new Server(port)
     val context = new WebAppContext()
     context.setContextPath("/")
     context.setBaseResourceAsString("src/main/webapp")

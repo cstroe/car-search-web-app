@@ -1,30 +1,22 @@
 package com.example
 
-import com.example.Freemarker.freemarker
+import com.example.Templates.html.{
+  main,
+  vehicle => vehicleTemplate,
+  notFound => notFoundTemplate
+}
 import org.scalatra.util.RequestLogging
-import org.scalatra.{ActionResult, Found, Ok, ScalatraServlet}
+import org.scalatra.{Found, Ok, ScalatraServlet}
 
-import java.io.StringWriter
 import java.sql.Connection
-import scala.jdk.CollectionConverters._
 
 class Vehicles extends ScalatraServlet with RequestLogging {
   implicit val connection: Connection = VehicleDatabase.openConnection()
 
-  private def Template(
-      templateName: String,
-      model: Map[String, Any]
-  ): ActionResult = {
-    val template       = freemarker.getTemplate(templateName)
-    val responseWriter = new StringWriter()
-    template.process(model.asJava, responseWriter)
-    Ok(responseWriter.toString)
-  }
-
   get("/") {
     contentType = "text/html"
-    val vehicles = VehicleDatabase.listAvailableVehicles().asJava
-    Template("main.flth", Map("vehicles" -> vehicles))
+    val vehicles = VehicleDatabase.listAvailableVehicles()
+    Ok(main.apply(vehicles).toString())
   }
 
   get("/vehicle/:id") {
@@ -32,9 +24,9 @@ class Vehicles extends ScalatraServlet with RequestLogging {
     contentType = "text/html"
     VehicleDatabase.getVehicle(id) match {
       case Some(vehicle) =>
-        Template("vehicle.flth", Map("vehicle" -> vehicle))
+        Ok(vehicleTemplate(vehicle))
       case None =>
-        Template("not_found.flth", Map.empty)
+        Ok(notFoundTemplate())
     }
   }
 

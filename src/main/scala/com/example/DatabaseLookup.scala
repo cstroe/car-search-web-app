@@ -51,16 +51,16 @@ object VehicleDatabase {
   }
 
   private def parseVehicle(result: ResultSet): Try[Vehicle] = Try {
-    val id         = result.getLong(1)
-    val year       = result.getInt(2)
-    val make       = result.getString(3)
-    val model      = result.getString(4)
-    val trim       = result.getString(5)
-    val miles      = result.getInt(6)
-    val url        = result.getString(7)
-    val price      = result.getInt(8)
-    val dealer     = result.getString(9)
-    val vin        = result.getString(10)
+    val id = result.getLong(1)
+    val year = result.getInt(2)
+    val make = result.getString(3)
+    val model = result.getString(4)
+    val trim = result.getString(5)
+    val miles = result.getInt(6)
+    val url = result.getString(7)
+    val price = result.getInt(8)
+    val dealer = result.getString(9)
+    val vin = result.getString(10)
     val interested = result.getBoolean(11)
 
     Vehicle(
