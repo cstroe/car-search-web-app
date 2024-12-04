@@ -12,7 +12,6 @@ object ScalatraMain {
     context.setContextPath("/")
     context.setBaseResourceAsString("src/main/webapp")
     context.addEventListener(new ScalatraListener)
-
     server.setHandler(context)
 
     println(s"Starting Server at http://localhost:$port")

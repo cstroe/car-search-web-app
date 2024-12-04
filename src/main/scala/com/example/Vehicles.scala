@@ -1,33 +1,41 @@
 package com.example
 
+import com.example.Freemarker.freemarker
 import org.scalatra.util.RequestLogging
-import org.scalatra.{Found, Ok, ScalatraServlet}
+import org.scalatra.{ActionResult, Found, Ok, ScalatraServlet}
 
+import java.io.StringWriter
 import java.sql.Connection
+import scala.jdk.CollectionConverters._
 
 class Vehicles extends ScalatraServlet with RequestLogging {
   implicit val connection: Connection = VehicleDatabase.openConnection()
 
+  private def Template(
+      templateName: String,
+      model: Map[String, Any]
+  ): ActionResult = {
+    val template       = freemarker.getTemplate(templateName)
+    val responseWriter = new StringWriter()
+    template.process(model.asJava, responseWriter)
+    Ok(responseWriter.toString)
+  }
+
   get("/") {
     contentType = "text/html"
-    val vehicles = VehicleDatabase.listAvailableVehicles()
-    val response = {
-      "<html>" +
-        "<head><style>" +
-        "td {" +
-        "  padding: 10px;" +
-        "}" +
-        "table {" +
-        "  border: 1px solid black;" +
-        "}" +
-        "</style></head>" +
-        "<body>" +
-        "<h1>Vehicles</h1><table>" +
-        Vehicle.header +
-        vehicles.map(_.toHtml).mkString("\n") + "</table>" +
-        "</body></html>"
+    val vehicles = VehicleDatabase.listAvailableVehicles().asJava
+    Template("main.flth", Map("vehicles" -> vehicles))
+  }
+
+  get("/vehicle/:id") {
+    val id = params("id").toInt
+    contentType = "text/html"
+    VehicleDatabase.getVehicle(id) match {
+      case Some(vehicle) =>
+        Template("vehicle.flth", Map("vehicle" -> vehicle))
+      case None =>
+        Template("not_found.flth", Map.empty)
     }
-    Ok(response)
   }
 
   get("/set_as_unavailable/:id") {

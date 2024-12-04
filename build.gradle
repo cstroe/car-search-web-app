@@ -53,6 +53,9 @@ dependencies {
   implementation "org.scalatra:scalatra-json-jakarta_${versions.ScalaBinary}:3.1.0"
   implementation "org.scalatra:scalatra-forms-jakarta_${versions.ScalaBinary}:3.1.0"
 
+  // Apache Freemarker
+  implementation "org.freemarker:freemarker-gae:2.3.33"
+
   testImplementation "org.scalatest:scalatest_${scalaVersion}:3.2.16"
   testRuntimeOnly "com.vladsch.flexmark:flexmark-all:0.64.8"
 }
