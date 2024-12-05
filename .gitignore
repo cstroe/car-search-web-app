@@ -4,3 +4,6 @@
 
 # IntelliJ
 /out/
+
+# Database backup files
+/*.sql.gz

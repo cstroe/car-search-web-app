@@ -7,10 +7,12 @@ services:
     environment:
       POSTGRES_PASSWORD: example
       PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - type: bind
-        source: /home/angela/cosmin/Docker/postgres/data
-        target: /var/lib/postgresql/data
+    # Uncomment this volume if you want a permanent copy on your computer.
+    # Change <some_path_here> to a real path.
+    #volumes:
+    #  - type: bind
+    #    source: /<some_path_here>/postgres/data
+    #    target: /var/lib/postgresql/data
     ports:
       - 5432:5432
 

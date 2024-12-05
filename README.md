@@ -16,6 +16,12 @@ Start a new Postgres database using `docker-compose`:
 docker-compose up -d
 ```
 
+After the database is up, you can restore a database snapshot:
+
+```shell
+./restore_database.sh <path to .sql.gz backup>
+```
+
 ### Webapp
 
 Run the web application using:
@@ -25,6 +31,14 @@ Run the web application using:
 ```
 
 Look on the console to see the URL where the web app is listening.
+
+### Backup the database
+
+Run:
+
+```shell
+./backup_database.sh
+```
 
 ## Testing
 
