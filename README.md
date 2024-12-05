@@ -3,7 +3,12 @@
 A simple web app to keep track of vehicles for sale.
 You're probably better off using a spreadsheet.
 
-![](docs/screenshot-20241205.png)
+<table>
+<tr>
+    <td><img alt="A screenshot of the main screen of the web app showing a list of vehicles"
+             src="docs/screenshot-20241205.png"/></td>
+</tr>
+</table>
 
 ## Requirements
 
