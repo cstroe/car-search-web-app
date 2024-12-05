@@ -1,6 +1,9 @@
 # VanSearch
 
-A Scala project built using Gradle
+A simple web app to keep track of vehicles for sale.
+You're probably better off using a spreadsheet.
+
+![](docs/screenshot-20241205.png)
 
 ## Requirements
 
@@ -16,7 +19,7 @@ Start a new Postgres database using `docker-compose`:
 docker-compose up -d
 ```
 
-After the database is up, you can restore a database snapshot:
+After the database is up, you can restore a database snapshot (if you have one):
 
 ```shell
 ./restore_database.sh <path to .sql.gz backup>
