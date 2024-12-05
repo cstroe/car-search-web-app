@@ -4,7 +4,7 @@ CREATE SCHEMA vehicles;
 CREATE TABLE vehicles.all
 (
     id         SERIAL PRIMARY KEY,
-    year       smallserial NOT NULL,
+    year       smallint NOT NULL,
     make       varchar(16) NOT NULL,
     model      varchar(16) NOT NULL,
     trim       varchar(16),
@@ -20,6 +20,7 @@ CREATE TABLE vehicles.all
 
 CREATE TABLE vehicles.price
 (
+    id      SERIAL PRIMARY KEY,
     vehicle integer references vehicles.all (id),
     date    date,
     price   integer
