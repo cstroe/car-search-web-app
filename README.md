@@ -8,11 +8,23 @@ A Scala project built using Gradle
 
 ## Usage
 
-Build this project with:
+### Database
 
+Start a new Postgres database using `docker-compose`: 
+
+```shell
+docker-compose up -d
 ```
-./gradlew build
+
+### Webapp
+
+Run the web application using:
+
+```shell
+./gradlew run
 ```
+
+Look on the console to see the URL where the web app is listening.
 
 ## Testing
 
