@@ -3,14 +3,26 @@
 A simple web app to keep track of vehicles for sale.
 You're probably better off using a spreadsheet.
 
-## Screenshot
+## Screenshots
+
+### Main screen
 
 <table>
 <tr>
     <td><img alt="A screenshot of the main screen of the web app showing a list of vehicles"
-             src="docs/screenshot-20241205.png"/></t    d>
+             src="docs/screenshot-20241205.png"/></td>
 </tr>
 </table>
+
+### Vehicle Details
+
+<table>
+<tr>
+    <td><img alt="A screenshot of the vehicle details screen showing a table of prices over time"
+             src="docs/screenshot2-20241205.png"/></td>
+</tr>
+</table>
+
 
 ## Technical Details
 
@@ -66,4 +78,4 @@ xdg-open build/reports/test/index.html
 
 NOTE: On MacOS, use `open` instead of `xdg-open`.
 
-![](https://notbyai.fyi/img/en/written-by-human-not-by-ai-white.svg)
+![](https://notbyai.fyi/img/en/written-by-human-not-by-ai-white.svg)    
