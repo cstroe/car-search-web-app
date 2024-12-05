@@ -28,7 +28,8 @@ You're probably better off using a spreadsheet.
 
 This is a [Scalatra](https://scalatra.org) web app, written in [Scala](https://scala-lang.org),
 using [Twirl templates](https://www.playframework.com/documentation/3.0.x/ScalaTemplates), served by
-[Jetty](https://jetty.org/index.html    ).
+[Jetty](https://jetty.org/index.html), using a [PosgreSQL](https://www.postgresql.org/) database for
+persistence.
 
 ## Requirements
 
