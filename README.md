@@ -1,14 +1,22 @@
-# VanSearch
+# car-search-web-app
 
 A simple web app to keep track of vehicles for sale.
 You're probably better off using a spreadsheet.
 
+## Screenshot
+
 <table>
 <tr>
     <td><img alt="A screenshot of the main screen of the web app showing a list of vehicles"
-             src="docs/screenshot-20241205.png"/></td>
+             src="docs/screenshot-20241205.png"/></t    d>
 </tr>
 </table>
+
+## Technical Details
+
+This is a [Scalatra](https://scalatra.org) web app, written in [Scala](https://scala-lang.org),
+using [Twirl templates](https://www.playframework.com/documentation/3.0.x/ScalaTemplates), served by
+[Jetty](https://jetty.org/index.html    ).
 
 ## Requirements
 
