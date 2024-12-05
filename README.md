@@ -33,7 +33,8 @@ persistence.
 
 ## Requirements
 
-* JDK 8+: can be obtained from [AdoptOpenJDK](https://adoptopenjdk.net/) and other sources.
+* JDK 21+: can be obtained from [Adoptium](https://adoptium.net) and other sources.
+* Docker and `docker-compose`
 
 ## Usage
 
