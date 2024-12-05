@@ -23,6 +23,7 @@ CREATE TABLE vehicles.price
     id      SERIAL PRIMARY KEY,
     vehicle integer references vehicles.all (id),
     date    date,
-    price   integer
+    price   integer,
+    UNIQUE ("vehicle", "date", "price")
 );
 
