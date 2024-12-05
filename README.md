@@ -65,3 +65,5 @@ xdg-open build/reports/test/index.html
 ```
 
 NOTE: On MacOS, use `open` instead of `xdg-open`.
+
+![](https://notbyai.fyi/img/en/written-by-human-not-by-ai-white.svg)
