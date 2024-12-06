@@ -35,7 +35,7 @@ object VehicleDatabase {
                       |  ),
                       |  dealer,
                       |  vin,
-                      |  interested
+                      |  interested, exterior, interior
                       |FROM vehicles.all AS v
                       |WHERE available
                       |ORDER BY year, make, model, trim;
@@ -62,6 +62,8 @@ object VehicleDatabase {
     val dealer = result.getString(9)
     val vin = result.getString(10)
     val interested = result.getBoolean(11)
+    val exterior = ExteriorColor.parse(result.getString(12))
+    val interior = result.getString(13)
 
     Vehicle(
       id,
@@ -74,7 +76,9 @@ object VehicleDatabase {
       url,
       dealer,
       vin,
-      interested
+      interested,
+      exterior,
+      interior
     )
   }
 
@@ -93,9 +97,7 @@ object VehicleDatabase {
             |    ORDER BY date DESC
             |    LIMIT 1
             |  ),
-            |  dealer,
-            |  vin,
-            |  interested
+            |  dealer, vin, interested, exterior, interior
             |FROM vehicles.all AS v
             |WHERE id = $id;
             |""".stripMargin

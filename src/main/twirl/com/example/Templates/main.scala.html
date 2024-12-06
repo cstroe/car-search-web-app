@@ -12,7 +12,8 @@
                 border: 1px solid black;
             }
         </style>
-        <title></title>
+        <link rel="stylesheet" href="/css/tooltip.css">
+        <title>Honda Finder</title>
     </head>
 
     <body>
@@ -27,6 +28,7 @@
                 <th>make</th>
                 <th>model</th>
                 <th>trim</th>
+                <th><!-- exterior color --></th>
                 <th>miles</th>
                 <th>price</th>
                 <th>vin</th>
@@ -48,6 +50,18 @@
                   <td>@vehicle.make</td>
                   <td>@vehicle.model</td>
                   <td>@vehicle.trim</td>
+                  <td>
+                    <div class="tooltip"
+                        @Html(
+                          vehicle.exterior.htmlColor match {
+                              case Some(colorCode) =>
+                                  s"""style="width: 28px; height: 28px; border: 2px solid black; background-color: $colorCode;""""
+                              case None =>
+                                  s"""style="width: 29px; height: 29px; border: 1px dashed black;""""
+                          }
+                        )
+                    ><span class="tooltiptext" style="margin-left: 40px; margin-top: -10px;">@vehicle.exterior.name</span></div>
+                  </td>
                   <td>@{"%,d".format(vehicle.miles)}</td>
                   <td>$ @{"%,d".format(vehicle.price)}</td>
                   <td>@vehicle.vin</td>

@@ -1,3 +1,4 @@
+/* https://www.w3schools.com/css/css_tooltip.asp */
 .tooltip {
     position: relative;
     display: inline-block;
@@ -16,6 +17,8 @@
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
+
+    transition-delay: 1s;
 }
 
 .tooltip:hover .tooltiptext {
