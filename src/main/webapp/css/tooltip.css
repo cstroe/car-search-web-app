@@ -23,4 +23,5 @@
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+    transition: 0s;
 }
