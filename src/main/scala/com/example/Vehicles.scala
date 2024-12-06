@@ -8,11 +8,7 @@ import com.example.Templates.html.{
 import org.scalatra.util.RequestLogging
 import org.scalatra.{Found, Ok, ScalatraServlet}
 
-import java.sql.Connection
-
 class Vehicles extends ScalatraServlet with RequestLogging {
-  implicit val connection: Connection = VehicleDatabase.openConnection()
-
   get("/") {
     contentType = "text/html"
     val vehicles = VehicleDatabase.listAvailableVehicles()

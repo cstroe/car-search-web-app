@@ -5,21 +5,9 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.{Try, Using}
 
 object VehicleDatabase {
-  def openConnection(): Connection = {
-    val jdbcUrl =
-      "jdbc:postgresql://localhost:5432/postgres?sslmode=disable&search_path=vehicles"
-    val username = "postgres"
-    val password = "example"
-
-    // Register the PostgreSQL driver
-    Class.forName("org.postgresql.Driver")
-
-    // Connect to the database
-    DriverManager.getConnection(jdbcUrl, username, password)
-  }
-
-  def listAvailableVehicles()(implicit connection: Connection): Seq[Vehicle] = {
+  def listAvailableVehicles(): Seq[Vehicle] = {
     Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
       val result = use(
         st.executeQuery(
@@ -82,8 +70,9 @@ object VehicleDatabase {
     )
   }
 
-  def getVehicle(id: Int)(implicit connection: Connection): Option[Vehicle] = {
+  def getVehicle(id: Int): Option[Vehicle] = {
     Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
       val result = use(
         st.executeQuery(
@@ -109,8 +98,9 @@ object VehicleDatabase {
     }.get
   }
 
-  def setUnavailable(id: Int)(implicit connection: Connection): Unit = {
+  def setUnavailable(id: Int): Unit = {
     Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
       st.execute(s"""
           |UPDATE vehicles.all
@@ -120,10 +110,9 @@ object VehicleDatabase {
     }.get
   }
 
-  def setInterested(id: Int, interested: Boolean)(implicit
-      connection: Connection
-  ): Unit = {
+  def setInterested(id: Int, interested: Boolean): Unit = {
     Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
       st.execute(s"""
            |UPDATE vehicles.all
@@ -133,8 +122,9 @@ object VehicleDatabase {
     }.get
   }
 
-  def getPrices(vehicleId: Int)(implicit connection: Connection): Seq[Price] = {
+  def getPrices(vehicleId: Int): Seq[Price] = {
     Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
       val result = st.executeQuery(s"""
            |SELECT date, price
