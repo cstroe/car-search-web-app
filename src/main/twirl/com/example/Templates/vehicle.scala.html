@@ -62,6 +62,7 @@
             <tr>
                 <th>date</th>
                 <th>price</th>
+                <th>action</th>
             </tr>
             <tr>
                 <td colspan="2">
@@ -81,6 +82,7 @@
               <tr>
                 <td>@price.date</td>
                 <td>$ @{"%,d".format(price.amount)}</td>
+                  <td><a href="/vehicle/@{vehicle.id}/delete_price/@{price.id}">DELETE</a></td>
               </tr>
             }
         </table>

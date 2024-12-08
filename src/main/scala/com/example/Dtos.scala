@@ -48,4 +48,4 @@ case class Vehicle(
     interior: String
 )
 
-case class Price(date: LocalDate, amount: Int)
+case class Price(id: Int, date: LocalDate, amount: Int)

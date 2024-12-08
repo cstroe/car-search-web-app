@@ -84,6 +84,14 @@ class Vehicles
     )
   }
 
+  // TODO: This should be a post action
+  get("/vehicle/:vehicle_id/delete_price/:price_id") {
+    val vehicleId = params("vehicle_id").toInt
+    val priceId = params("price_id").toInt
+    VehicleDatabase.deletePrice(vehicleId, priceId)
+    Found(s"/vehicle/$vehicleId")
+  }
+
   get("/set_as_unavailable/:id") {
     val id = params("id").toInt
     VehicleDatabase.setUnavailable(id)

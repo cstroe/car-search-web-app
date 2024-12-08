@@ -127,7 +127,7 @@ object VehicleDatabase {
       val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
       val result = st.executeQuery(s"""
-           |SELECT date, price
+           |SELECT date, price, id
            |FROM vehicles.price
            |WHERE vehicle = $vehicleId
            |ORDER BY date DESC
@@ -136,7 +136,8 @@ object VehicleDatabase {
       while (result.next()) {
         val date = result.getDate(1).toLocalDate
         val price = result.getInt(2)
-        buffer.addOne(Price(date, price))
+        val id = result.getInt(3)
+        buffer.addOne(Price(id, date, price))
       }
       buffer.toSeq
     }.get
@@ -186,6 +187,20 @@ object VehicleDatabase {
            |  CURRENT_DATE,
            |  $price);""".stripMargin
       )
+    }.get
+  }
+
+  def deletePrice(vehicleId: Int, priceId: Int): Unit = {
+    Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
+      val preparedSt = connection.prepareStatement(
+        s"""
+           |DELETE FROM vehicles.price
+           |WHERE vehicle = ? AND id = ?;""".stripMargin
+      )
+      preparedSt.setInt(1, vehicleId)
+      preparedSt.setInt(2, priceId)
+      preparedSt.execute()
     }.get
   }
 }
