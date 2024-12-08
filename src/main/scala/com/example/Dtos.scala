@@ -23,7 +23,7 @@ object ExteriorColor {
         ExteriorColor(color, Option("#85A3A9"), Option("NH877P"))
       case "Smoke Blue Pearl" =>
         ExteriorColor(color, Option("#0464B9"), Option("B-642P"))
-      case "Pacific Pewter Metallic" =>
+      case "Pacific Pewter Metallic" | "Brown" =>
         ExteriorColor(color, Option("#6F684D"), Option("NH-862M"))
       case "Deep Scarlet Pearl" =>
         ExteriorColor(color, Option("#6A2F2F"), Option("R-561P"))
