@@ -173,4 +173,19 @@ object VehicleDatabase {
       )
     }.get
   }
+
+  def insertPrice(vehicleId: Int, price: Int): Unit = {
+    Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
+      val st = use(connection.createStatement())
+      st.execute(
+        s"""
+           |INSERT INTO vehicles.price (vehicle, date, price)
+           |VALUES (
+           |  $vehicleId,
+           |  CURRENT_DATE,
+           |  $price);""".stripMargin
+      )
+    }.get
+  }
 }

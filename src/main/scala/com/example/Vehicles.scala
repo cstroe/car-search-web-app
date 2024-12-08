@@ -6,7 +6,7 @@ import com.example.Templates.html.{
   notFound => notFoundTemplate,
   vehicle => vehicleTemplate
 }
-import com.example.Vehicles.{extractDealer, newVehicleForm}
+import com.example.Vehicles.{extractDealer, newPriceForm, newVehicleForm}
 import org.scalatra.forms._
 import org.scalatra.i18n.I18nSupport
 import org.scalatra.util.RequestLogging
@@ -36,6 +36,10 @@ object Vehicles {
     "vin" -> label("VIN", text(required)),
     "url" -> label("URL", text(required))
   )(NewVehicleForm.apply)
+
+  val newPriceForm: MappingValueType[NewPriceForm] = mapping(
+    "price" -> label("Price", number(required))
+  )(NewPriceForm.apply)
 }
 
 class Vehicles
@@ -51,15 +55,33 @@ class Vehicles
     Ok(main.apply(vehicles).toString())
   }
 
-  get("/vehicle/:id") {
-    val id = params("id").toInt
-    contentType = "text/html"
+  private def singleVehicle(id: Int): ActionResult = {
     VehicleDatabase.getVehicle(id) match {
       case Some(vehicle) =>
         Ok(vehicleTemplate(vehicle, VehicleDatabase.getPrices(id)))
       case None =>
         Ok(notFoundTemplate())
     }
+  }
+
+  get("/vehicle/:id") {
+    val id = params("id").toInt
+    contentType = "text/html"
+    singleVehicle(id)
+  }
+
+  post("/vehicle/:id/new_price") {
+    val id = params("id").toInt
+    contentType = "text/html"
+    validate[NewPriceForm, ActionResult](newPriceForm)(
+      hasErrors = _ => {
+        singleVehicle(id)
+      },
+      success = form => {
+        VehicleDatabase.insertPrice(id, form.price)
+        Found(s"/vehicle/$id")
+      }
+    )
   }
 
   get("/set_as_unavailable/:id") {
@@ -85,6 +107,7 @@ class Vehicles
   }
 
   post("/new_vehicle") {
+    contentType = "text/html"
     validate[NewVehicleForm, ActionResult](newVehicleForm)(
       hasErrors = _ => {
         BadRequest(newVehicleTemplate())

@@ -1,5 +1,4 @@
 package com.example
-import org.scalatra.forms._
 
 case class NewVehicleForm(
     year: Int,
@@ -12,4 +11,7 @@ case class NewVehicleForm(
     price: Int,
     vin: String,
     url: String
+)
+case class NewPriceForm(
+    price: Int
 )
