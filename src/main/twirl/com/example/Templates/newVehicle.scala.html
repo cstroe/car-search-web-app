@@ -1,0 +1,79 @@
+@()(implicit request: jakarta.servlet.http.HttpServletRequest)
+@import org.scalatra.forms.views._
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            td {
+                padding: 10px;
+            }
+
+            table {
+                border: 1px solid black;
+            }
+            .error {
+                color: red;
+            }
+        </style>
+        <title>Add new vehicle</title>
+    </head>
+    <body>
+    <h1>Add new Vehicle</h1>
+      <form action="/new_vehicle" method="POST">
+          <div>
+              <label for="year">Year:</label>
+              @Html(text("year"))
+              <span class="error">@error("year")</span>
+          </div>
+          <div>
+              <label for="make">Make:</label>
+              @Html(text("make"))
+              <span class="error">@error("make")</span>
+          </div>
+          <div>
+              <label for="model">Model:</label>
+              @Html(text("model"))
+              <span class="error">@error("model")</span>
+          </div>
+          <div>
+              <label for="trim">Trim:</label>
+              @Html(text("trim"))
+              <span class="error">@error("trim")</span>
+          </div>
+          <div>
+              <label for="exterior">Exterior:</label>
+              @Html(text("exterior"))
+              <span class="error">@error("exterior")</span>
+          </div>
+          <div>
+              <label for="interior">Interior:</label>
+              @Html(text("interior"))
+              <span class="error">@error("interior")</span>
+          </div>
+          <div>
+              <label for="miles">Miles:</label>
+              @Html(text("miles"))
+              <span class="error">@error("miles")</span>
+          </div>
+          <div>
+              <label for="price">Price:</label>
+              @Html(text("price"))
+              <span class="error">@error("price")</span>
+          </div>
+
+          <div>
+              <label for="vin">VIN:</label>
+              @Html(text("vin"))
+              <span class="error">@error("vin")</span>
+          </div>
+          <div>
+              <label for="url">URL:</label>
+              @Html(text("url"))
+              <span class="error">@error("url")</span>
+          </div>
+          <div>
+              <input type="submit" value="Submit">
+          </div>
+      </form>
+    </body>
+</html>

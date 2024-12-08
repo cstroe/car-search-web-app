@@ -141,4 +141,36 @@ object VehicleDatabase {
       buffer.toSeq
     }.get
   }
+
+  def insertVehicle(vehicle: Vehicle): Unit = {
+    Using.Manager { use =>
+      val connection = use(DataSource.dataSource.getConnection)
+      val st = use(connection.createStatement())
+      val resultSet = st.executeQuery(s"""
+          |INSERT INTO vehicles.all (
+          |  year, make, model, trim, exterior, interior, miles,
+          |  vin, interested, dealer, url)
+          |VALUES (
+          |  ${vehicle.year},
+          |  '${vehicle.make}',
+          |  '${vehicle.model}',
+          |  '${vehicle.trim}',
+          |  '${vehicle.exterior.name}',
+          |  '${vehicle.interior}',
+          |  ${vehicle.miles},
+          |  '${vehicle.vin}',
+          |  false,
+          |  '${vehicle.dealer}',
+          |  '${vehicle.url}'
+          |) RETURNING id;""".stripMargin)
+      resultSet.next()
+      val newId = resultSet.getInt(1)
+      st.execute(
+        s"""
+           |INSERT INTO vehicles.price (vehicle, date, price)
+           |VALUES ($newId, CURRENT_DATE, ${vehicle.price});
+           |""".stripMargin
+      )
+    }.get
+  }
 }
