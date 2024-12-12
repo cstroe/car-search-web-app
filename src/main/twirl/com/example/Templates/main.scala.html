@@ -1,5 +1,5 @@
 @import com.example.Vehicle
-@(vehicles: Seq[Vehicle])
+@(vehicles: Seq[Vehicle], favorites: Boolean = false)
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,7 +17,13 @@
     </head>
 
     <body>
-        <h1>Vehicles <a href="/new_vehicle">Add New</a></h1>
+        <h1>Vehicles <a href="/new_vehicle">Add New</a>
+            @if(favorites) {
+                <a href="/">[Show All]</a>
+            } else {
+                <a href="/?favorites=true">[Show Favorites]</a>
+            }
+        </h1>
 
         <table>
             <tr>
@@ -39,10 +45,13 @@
               <tr>
                   <td><a href="/vehicle/@vehicle.id">@vehicle.id</a></td>
                   <td>
-                  @if(vehicle.interested) {
-                      <a href="/mark_not_interested/@vehicle.id">⭐</a>
-                  } else {
-                      <a href="/mark_interested/@vehicle.id">➕</a>
+                  @{
+                    val favoritesParam = if (favorites) { "?favorites=true" } else { "" }
+                    if (vehicle.interested) {
+                      Html(s"""<a href="/mark_not_interested/${vehicle.id}$favoritesParam">⭐</a>""")
+                    } else {
+                      Html(s"""<a href="/mark_interested/${vehicle.id}$favoritesParam">➕</a>""")
+                    }
                   }
                   </td>
                   <td>@vehicle.dealer</td>
@@ -66,7 +75,12 @@
                   <td>$ @{"%,d".format(vehicle.price)}</td>
                   <td>@vehicle.vin</td>
                   <td><a href="@vehicle.url" target="_blank">LINK</a></td>
-                  <td><a href="/set_as_unavailable/@vehicle.id">SET UNAVAILABLE</a></td>
+                  <td>
+                      @{
+                          val favoritesParam = if(favorites) { "?favorites=true" } else { "" }
+                          Html(s"""<a href="/set_as_unavailable/${vehicle.id}$favoritesParam">SET UNAVAILABLE</a>""")
+                      }
+                  </td>
               </tr>
             }
         </table>

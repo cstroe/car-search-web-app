@@ -50,9 +50,11 @@ class Vehicles
   private val URL_REGEX: Regex = "https?://(www.)?(.*)+\\.(org|com|net])/.*".r
 
   get("/") {
+    val favorites =
+      params.getOrElse("favorites", "false").toBooleanOption.getOrElse(false)
     contentType = "text/html"
-    val vehicles = VehicleDatabase.listAvailableVehicles()
-    Ok(main.apply(vehicles).toString())
+    val vehicles = VehicleDatabase.listAvailableVehicles(favorites)
+    Ok(main(vehicles, favorites).toString())
   }
 
   private def singleVehicle(id: Int): ActionResult = {
@@ -94,20 +96,38 @@ class Vehicles
 
   get("/set_as_unavailable/:id") {
     val id = params("id").toInt
+    val favorites =
+      params.getOrElse("favorites", "false").toBooleanOption.getOrElse(false)
     VehicleDatabase.setUnavailable(id)
-    Found("/")
+    if (favorites) {
+      Found("/?favorites=true")
+    } else {
+      Found("/")
+    }
   }
 
   get("/mark_not_interested/:id") {
     val id = params("id").toInt
+    val favorites =
+      params.getOrElse("favorites", "false").toBooleanOption.getOrElse(false)
     VehicleDatabase.setInterested(id, interested = false)
-    Found("/")
+    if (favorites) {
+      Found("/?favorites=true")
+    } else {
+      Found("/")
+    }
   }
 
   get("/mark_interested/:id") {
     val id = params("id").toInt
+    val favorites =
+      params.getOrElse("favorites", "false").toBooleanOption.getOrElse(false)
     VehicleDatabase.setInterested(id, interested = true)
-    Found("/")
+    if (favorites) {
+      Found("/?favorites=true")
+    } else {
+      Found("/")
+    }
   }
 
   get("/new_vehicle") {

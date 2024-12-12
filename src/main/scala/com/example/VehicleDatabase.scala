@@ -5,13 +5,16 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.{Try, Using}
 
 object VehicleDatabase {
-  def listAvailableVehicles(): Seq[Vehicle] = {
+  def listAvailableVehicles(onlyFavorites: Boolean = false): Seq[Vehicle] = {
     Using.Manager { use =>
       val connection = use(DataSource.dataSource.getConnection)
       val st = use(connection.createStatement())
+      val favoritesClause = if (onlyFavorites) {
+        Option("AND interested = true")
+      } else { None }
       val result = use(
         st.executeQuery(
-          """
+          s"""
                       |SELECT
                       |  id, year, make, model, trim, miles, url,
                       |  (
@@ -25,7 +28,7 @@ object VehicleDatabase {
                       |  vin,
                       |  interested, exterior, interior
                       |FROM vehicles.all AS v
-                      |WHERE available
+                      |WHERE available ${favoritesClause.getOrElse("")}
                       |ORDER BY year, make, model, trim;
           |""".stripMargin
         )
